@@ -13,12 +13,15 @@ function SignIn() {
     try {
       e.preventDefault();
 
-      const data = await axios.post("http://www.localhost:5000/user/sign-up", {
-        email,
-        password,
-        username: name,
-        password2,
-      });
+      const data = await axios.post(
+        "https://fast-atoll-84478.herokuapp.com/user/sign-up",
+        {
+          email,
+          password,
+          username: name,
+          password2,
+        }
+      );
 
       localStorage.setItem("firstLogin", true);
       localStorage.setItem("refreshtoken", data.data.refreshtoken);

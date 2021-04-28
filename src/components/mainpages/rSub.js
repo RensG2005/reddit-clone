@@ -18,7 +18,7 @@ function RSub() {
   const update = async () => {
     try {
       const data = await axios.post(
-        "http://www.localhost:5000/r/search",
+        "https://fast-atoll-84478.herokuapp.com/r/search",
         {
           query: window.location.href.split("/")[
             window.location.href.split("/").length - 1
@@ -37,7 +37,7 @@ function RSub() {
       if (data.data.length > 0) {
         const allPosts = data.data[0].posts;
         const data2 = await axios.post(
-          "http://www.localhost:5000/post/getbyid",
+          "https://fast-atoll-84478.herokuapp.com/post/getbyid",
           {
             ids: allPosts,
           },
@@ -75,7 +75,7 @@ function RSub() {
   const createPost = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/post/create",
+        "https://fast-atoll-84478.herokuapp.com/post/create",
         {
           title: name,
           text: desc,

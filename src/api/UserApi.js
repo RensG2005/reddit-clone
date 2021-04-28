@@ -11,7 +11,7 @@ function UserAPI(token) {
       const getUser = async () => {
         try {
           const res = await axios.get(
-            "http://localhost:5000/user/information",
+            "https://fast-atoll-84478.herokuapp.com/user/information",
             {
               headers: { Authorization: token },
             }

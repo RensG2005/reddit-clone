@@ -19,7 +19,7 @@ function PostPage({ setonPost }) {
 
   async function comment() {
     const data2 = await axios.post(
-      "http://www.localhost:5000/post/comment",
+      "https://fast-atoll-84478.herokuapp.com/post/comment",
       {
         id: id,
         text: Comment,
@@ -39,7 +39,7 @@ function PostPage({ setonPost }) {
   async function getPost() {
     try {
       const data2 = await axios.post(
-        "http://www.localhost:5000/post/getbyid",
+        "https://fast-atoll-84478.herokuapp.com/post/getbyid",
         {
           ids: [id],
         },

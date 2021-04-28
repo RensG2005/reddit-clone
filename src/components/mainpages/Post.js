@@ -23,7 +23,7 @@ function Post({ post, id }) {
     }
     try {
       await axios.post(
-        "http://localhost:5000/post/vote",
+        "https://fast-atoll-84478.herokuapp.com/post/vote",
         {
           way: "up",
           id: post._id,
@@ -51,7 +51,7 @@ function Post({ post, id }) {
     }
     try {
       await axios.post(
-        "http://localhost:5000/post/vote",
+        "https://fast-atoll-84478.herokuapp.com/post/vote",
         {
           way: "down",
           id: post._id,

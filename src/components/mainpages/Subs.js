@@ -17,10 +17,13 @@ function Subs() {
 
   const update = async () => {
     try {
-      const data = await axios.post("http://www.localhost:5000/r/search", {
-        query: "",
-        limit: 200,
-      });
+      const data = await axios.post(
+        "https://fast-atoll-84478.herokuapp.com/r/search",
+        {
+          query: "",
+          limit: 200,
+        }
+      );
       setData(data.data);
     } catch (err) {
       if (err.response) {
@@ -45,7 +48,7 @@ function Subs() {
   const createSub = async () => {
     try {
       await axios.post(
-        "http://www.localhost:5000/r/create",
+        "https://fast-atoll-84478.herokuapp.com/r/create",
         {
           title: name,
           description: desc,

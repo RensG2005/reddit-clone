@@ -22,10 +22,13 @@ function Login() {
     setLoading(true);
     try {
       e.preventDefault();
-      const data = await axios.post("http://www.localhost:5000/user/login", {
-        email: user.email,
-        password: user.password,
-      });
+      const data = await axios.post(
+        "https://fast-atoll-84478.herokuapp.com/user/login",
+        {
+          email: user.email,
+          password: user.password,
+        }
+      );
 
       setUser({ email: "", password: "" });
 

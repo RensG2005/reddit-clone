@@ -12,9 +12,12 @@ function Navbar() {
   const search = async (target) => {
     if (target) {
       try {
-        const data = await axios.post(`http://localhost:5000/r/search`, {
-          query: target.value,
-        });
+        const data = await axios.post(
+          `https://fast-atoll-84478.herokuapp.com/r/search`,
+          {
+            query: target.value,
+          }
+        );
         setSearchData(data.data);
       } catch (err) {
         console.log(err);
