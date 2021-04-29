@@ -47,6 +47,7 @@ function Subs() {
 
   const createSub = async () => {
     try {
+      console.log("hell", name, desc);
       await axios.post(
         "https://fast-atoll-84478.herokuapp.com/r/create",
         {
@@ -191,6 +192,7 @@ function Subs() {
               </button>
               <button
                 onClick={() => {
+                  console.log("Hello");
                   createSub();
                 }}
                 type="button"
