@@ -47,8 +47,7 @@ function Subs() {
 
   const createSub = async () => {
     try {
-      console.log("hell", name, desc);
-      await axios.post(
+      const data = await axios.post(
         "https://fast-atoll-84478.herokuapp.com/r/create",
         {
           title: name,
@@ -60,6 +59,7 @@ function Subs() {
           },
         }
       );
+      console.log(data);
     } catch (err) {
       if (err.response) {
         setError({ is: true, msg: err.response.data.msg });
