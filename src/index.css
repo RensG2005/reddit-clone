@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 
 body {
   margin: 0;
@@ -183,7 +183,7 @@ code {
 	width: 60px;
 	height: 60px;
   border: 2px solid #ffffff;
-  animation:spin3D 3s linear .2s infinite;
+  animation: spin3D 3s linear .2s infinite;
   -webkit-animation: spin3D 10s linear 0s infinite;
 }
 
@@ -276,4 +276,4 @@ code {
     opacity: .25;
     transform: scale(.75);
   }
-}
+} */
