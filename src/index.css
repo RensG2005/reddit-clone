@@ -165,7 +165,7 @@ code {
 	width: 120px;
 	height: 120px;
   border: 1px solid #91ffbfa5;
-  animation:spin3D 3s linear .2s infinite ;
+  animation:spin3D 2s linear 0s infinite ;
 
   -webkit-animation: spin3D 2s linear 0s infinite;
 }
@@ -174,7 +174,7 @@ code {
 	width: 90px;
 	height: 90px;
   border: 1px solid #ffca91a5;
-  animation:spin3D 3s linear .2s infinite ;
+  animation:spin3D 1s linear 0s infinite ;
 
   -webkit-animation: spin3D 1s linear 0s infinite;
 }
@@ -183,8 +183,8 @@ code {
 	width: 60px;
 	height: 60px;
   border: 2px solid #ffffff;
-  animation: spin3D 3s linear .2s infinite;
-  -webkit-animation: spin3D 10s linear 0s infinite;
+  animation: spin3D 10s linear .2s infinite;
+  -webkit-animation: spin3D 10s linear .2s infinite;
 }
 
 .w1 {
