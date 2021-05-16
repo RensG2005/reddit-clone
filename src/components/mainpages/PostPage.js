@@ -99,6 +99,7 @@ function PostPage({ setonPost }) {
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="What are your thoughts?"
+                type="text"
                 onChange={({ target }) => setComment(target.value)}
                ></textarea>
               <div className="input-group-prepend">
