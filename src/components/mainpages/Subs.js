@@ -46,9 +46,9 @@ function Subs() {
   }, []);
 
   const createSub = async () => {
+    console.log(name, desc, state.token[0])
     try {
-      const data = await axios.post(
-        "https://fast-atoll-84478.herokuapp.com/r/create",
+      const data = await axios.post( "https://fast-atoll-84478.herokuapp.com/r/create",
         {
           title: name,
           description: desc,
@@ -60,6 +60,7 @@ function Subs() {
         }
       );
       console.log(data);
+      update();
     } catch (err) {
       if (err.response) {
         setError({ is: true, msg: err.response.data.msg });
@@ -74,7 +75,6 @@ function Subs() {
         setError({});
       }, 3000);
     }
-    update();
   };
 
   return (
@@ -192,7 +192,6 @@ function Subs() {
               </button>
               <button
                 onClick={() => {
-                  console.log("Hello");
                   createSub();
                 }}
                 type="button"

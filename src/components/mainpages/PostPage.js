@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+TimeAgo.addDefaultLocale(en)
 
 function PostPage({ setonPost }) {
+  const timeAgo = new TimeAgo('en-US')
   const history = useHistory();
   const goBack = () => {
     history.goBack();
@@ -81,26 +85,25 @@ function PostPage({ setonPost }) {
         <div className="row">
           <div className="pointer link-bg col-sm" onClick={goBack}></div>
 
-          <div className="py-3 w-75 card text-white bg-dark-post">
+          <div className="py-4 w-75 card text-white bg-dark-post">
             <div className="d-flex justify-content-between">
-              <p>{post.creator}</p>
-              <p>{new Date(post.createdAt).toString().substring(0, 31)}</p>
+              <p>u/{post.creator}</p>
+              <p>{timeAgo.format(new Date(post.createdAt))}</p>
             </div>
-            <h1 className="py-3 border-top border-white">{post.title}</h1>
+            <h2 className="pt-2 pb-1 border-post">{post.title}</h2>
             <p className="fs-6">{post.text}</p>
 
-            <div class="input-group mb-3 border-top border-white pt-3">
-              <input
-                type="text"
-                class="form-control"
+            <div className="mb-3 border-post pt-3">
+              <textarea
+                className="mb-2 bg-darkdarkdark border-comment text-white width-100 p-2 form-control d-block"
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="What are your thoughts?"
                 onChange={({ target }) => setComment(target.value)}
-              />
-              <div class="input-group-prepend">
+               ></textarea>
+              <div className="input-group-prepend">
                 <button
-                  class="input-group-text"
+                  className="input-group-text"
                   id="inputGroup-sizing-default"
                   type="button"
                   onClick={() => comment()}
@@ -127,7 +130,7 @@ function PostPage({ setonPost }) {
                 );
               })
             ) : (
-              <div>"No comments yet!"</div>
+              <div>No comments yet!</div>
             )}
           </div>
 
@@ -135,7 +138,21 @@ function PostPage({ setonPost }) {
         </div>
       ) : (
         <>
-          <p>...loading</p>
+           <div className="spinner-box">
+                <div className="blue-orbit leo">
+                </div>
+
+                <div className="green-orbit leo">
+                </div>
+                
+                <div className="red-orbit leo">
+                </div>
+                
+                <div className="white-orbit w1 leo">
+                </div><div className="white-orbit w2 leo">
+                </div><div className="white-orbit w3 leo">
+                </div>
+              </div>
         </>
       )}
     </div>

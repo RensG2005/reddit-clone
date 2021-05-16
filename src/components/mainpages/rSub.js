@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, memo } from "react";
 import { GlobalState } from "../../GlobalState";
 import axios from "axios";
 import Post from "./Post";
+import ls from 'localstorage-ttl'
+
 
 function RSub() {
   const state = useContext(GlobalState);
@@ -16,6 +18,10 @@ function RSub() {
   });
 
   const update = async () => {
+    if(ls.get("posts") !== null && ls.get("sub") !== null) {
+      setPosts(ls.get("posts"))
+      setData(ls.get("sub"))
+    } else {
     try {
       const data = await axios.post(
         "https://fast-atoll-84478.herokuapp.com/r/search",
@@ -48,6 +54,9 @@ function RSub() {
           }
         );
         setPosts(data2.data);
+        console.log(data.data[0], data2.data)
+        ls.set("posts", data2.data, [3600000])
+        ls.set("sub", data.data[0], [3600000])
       } else {
         setPosts([]);
       }
@@ -66,6 +75,7 @@ function RSub() {
         setError({});
       }, 3000);
     }
+  }
   };
 
   useEffect(() => {
@@ -124,9 +134,26 @@ function RSub() {
               return <Post post={post} key={post._id} />;
             })
           ) : (
-            <div className="mt-3" key="123">
-              No posts found
+            <div className="mt-3">
+
+                <div className="spinner-box">
+                <div className="blue-orbit leo">
+                </div>
+
+                <div className="green-orbit leo">
+                </div>
+                
+                <div className="red-orbit leo">
+                </div>
+                
+                <div className="white-orbit w1 leo">
+                </div><div className="white-orbit w2 leo">
+                </div><div className="white-orbit w3 leo">
+                </div>
+              </div>
             </div>
+
+
           )}
         </div>
 

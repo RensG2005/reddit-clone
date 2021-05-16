@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 import axios from "axios";
+import TimeAgo from 'javascript-time-ago'
 
 function Post({ post, id }) {
+  const timeAgo = new TimeAgo('en-US')
   const state = useContext(GlobalState);
   const [vote, setvote] = useState(false);
   const [dvote, setdvote] = useState(false);
@@ -140,7 +142,7 @@ function Post({ post, id }) {
                 {post.creator}{" "}
               </p>
               <p className="fw-lighter">
-                {new Date(post.createdAt).toString().substring(0, 31)}
+                {timeAgo.format(new Date(post.createdAt))}
               </p>
             </div>
 

@@ -3,20 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState({
     is: false,
     msg: "",
   });
-
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
 
   const login = async (e) => {
     setLoading(true);
@@ -25,17 +18,18 @@ function Login() {
       const data = await axios.post(
         "https://fast-atoll-84478.herokuapp.com/user/login",
         {
-          email: user.email,
-          password: user.password,
+          email,
+          password
         }
       );
 
-      setUser({ email: "", password: "" });
+      setEmail("")
+      setPassword("")
 
       localStorage.setItem("firstLogin", true);
       localStorage.setItem("refreshtoken", data.data.refreshtoken);
-
-      window.location.href = document.referrer;
+      
+      window.location.href = "/account";
     } catch (err) {
       console.log(err);
       if (err.response) {
@@ -69,13 +63,14 @@ function Login() {
           </label>
           <input
             required
-            value={user.email}
+            value={email}
             name="email"
-            onChange={(e) => onChangeInput(e)}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             className="form-control"
-            id="exampleInputEmail1"
+            id="email"
             aria-describedby="emailHelp"
+            autoComplete="new-password"
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -87,12 +82,13 @@ function Login() {
           </label>
           <input
             required
-            value={user.password}
+            value={password}
             name="password"
-            onChange={(e) => onChangeInput(e)}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             className="form-control"
-            id="exampleInputPassword1"
+            id="password"
+            autoComplete="new-password"
           />
           <div id="passwordHelpBlock" className="form-text">
             Your password must be 6 characters long, contain letters and
