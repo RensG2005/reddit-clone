@@ -5,12 +5,7 @@ import Post from "./Post";
 import ls from 'localstorage-ttl'
 import Loader from "../Loader";
 
-
 function RSub() {
-  if(localStorage.getItem("sub") != null && JSON.parse(localStorage.getItem("sub")).value.title !==  window.location.href.split("/")[window.location.href.split("/").length - 1]) {
-    localStorage.removeItem("posts")
-    localStorage.removeItem("sub")
-  }
   const state = useContext(GlobalState);
 
   const [name, setName] = useState("");
@@ -89,6 +84,11 @@ function RSub() {
   useEffect(() => {
     let unmounted = false
     if(!unmounted) {
+      if(localStorage.getItem("sub") != null && JSON.parse(localStorage.getItem("sub")).value.title !==  window.location.href.split("/")[window.location.href.split("/").length - 1]) {
+        console.log("sup")
+        localStorage.removeItem("posts")
+        localStorage.removeItem("sub")
+      }
       update();
     }
     return (
