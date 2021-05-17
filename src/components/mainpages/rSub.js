@@ -1,14 +1,20 @@
-import React, { useState, useContext, useEffect, memo } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GlobalState } from "../../GlobalState";
 import axios from "axios";
 import Post from "./Post";
 import ls from 'localstorage-ttl'
+import Loader from "../Loader";
 
 
 function RSub() {
+  if(localStorage.getItem("sub") != null && JSON.parse(localStorage.getItem("sub")).value.title !==  window.location.href.split("/")[window.location.href.split("/").length - 1]) {
+    localStorage.removeItem("posts")
+    localStorage.removeItem("sub")
+  }
   const state = useContext(GlobalState);
 
   const [name, setName] = useState("");
+  const [loader, setLoader] = useState(<Loader />);
   const [data, setData] = useState([]);
   const [posts, setPosts] = useState([]);
   const [desc, setDesc] = useState("");
@@ -40,7 +46,7 @@ function RSub() {
 
       setData(data.data[0]);
 
-      if (data.data.length > 0) {
+      if (data.data[0].posts.length > 0) {
         const allPosts = data.data[0].posts;
         const data2 = await axios.post(
           "https://fast-atoll-84478.herokuapp.com/post/getbyid",
@@ -54,11 +60,13 @@ function RSub() {
           }
         );
         setPosts(data2.data);
-        console.log(data.data[0], data2.data)
         ls.set("posts", data2.data, [3600000])
         ls.set("sub", data.data[0], [3600000])
       } else {
         setPosts([]);
+        setLoader(<div>
+          <h2>No posts were found, Make one!</h2>
+        </div>)
       }
     } catch (err) {
       console.log(err);
@@ -79,7 +87,13 @@ function RSub() {
   };
 
   useEffect(() => {
-    update();
+    let unmounted = false
+    if(!unmounted) {
+      update();
+    }
+    return (
+      unmounted = true
+    )
   }, []);
 
   const createPost = async () => {
@@ -134,24 +148,8 @@ function RSub() {
               return <Post post={post} key={post._id} />;
             })
           ) : (
-            <div className="mt-3">
-
-                <div className="spinner-box">
-                <div className="blue-orbit leo">
-                </div>
-
-                <div className="green-orbit leo">
-                </div>
-                
-                <div className="red-orbit leo">
-                </div>
-                
-                <div className="white-orbit w1 leo">
-                </div><div className="white-orbit w2 leo">
-                </div><div className="white-orbit w3 leo">
-                </div>
-              </div>
-            </div>
+            
+            loader
 
 
           )}

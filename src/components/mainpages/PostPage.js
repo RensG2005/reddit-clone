@@ -4,6 +4,7 @@ import { GlobalState } from "../../GlobalState";
 import { useHistory } from "react-router-dom";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import Loader from "../Loader";
 TimeAgo.addDefaultLocale(en)
 
 function PostPage({ setonPost }) {
@@ -15,6 +16,10 @@ function PostPage({ setonPost }) {
   const state = useContext(GlobalState);
 
   const [post, setPost] = useState({});
+  const [error, setError] = useState({
+    is: false,
+    msg: ""
+  });
   const [Comment, setComment] = useState("");
 
   let id = window.location.href.split("/")[
@@ -22,22 +27,25 @@ function PostPage({ setonPost }) {
   ];
 
   async function comment() {
-    const data2 = await axios.post(
-      "https://fast-atoll-84478.herokuapp.com/post/comment",
-      {
-        id: id,
-        text: Comment,
-        creator: state.UserApi.user[0].username,
-        createdAt: new Date(),
-      },
-      {
-        headers: {
-          Authorization: state.token[0],
+    try {
+      const data2 = await axios.post(
+        "https://fast-atoll-84478.herokuapp.com/post/comment",
+        {
+          id: id,
+          text: Comment ? Comment : "",
+          creator: state.UserApi.user[0].username,
+          createdAt: new Date(),
         },
-      }
-    );
-
-    console.log(data2.data);
+        {
+          headers: {
+            Authorization: state.token[0],
+          },
+        }
+      );
+      if(!data2.data) setError({is: true, msg: "Something went wrong while making an comment."})
+    } catch (err) {
+      setError({is: true, msg: err.response.data.msg})
+    }
   }
 
   async function getPost() {
@@ -81,6 +89,13 @@ function PostPage({ setonPost }) {
 
   return (
     <div onKeyDown={handleKeyPress} tabIndex="0" id="focus">
+            {error.is ? (
+        <div className="alert alert-danger" role="alert">
+          {error.msg}
+        </div>
+      ) : (
+        ""
+      )}
       {Object.keys(post).length > 0 ? (
         <div className="row">
           <div className="pointer link-bg col-sm" onClick={goBack}></div>
@@ -122,7 +137,7 @@ function PostPage({ setonPost }) {
                   >
                     <div className="d-flex justify-content-between">
                       <p>
-                        {new Date(post.createdAt).toString().substring(0, 31)}
+                        {timeAgo.format(new Date(post.createdAt))}
                       </p>
                       <p>u/{post.creator}</p>
                     </div>
@@ -137,25 +152,7 @@ function PostPage({ setonPost }) {
 
           <div className="pointer link-bg col-sm" onClick={goBack}></div>
         </div>
-      ) : (
-        <>
-           <div className="spinner-box">
-                <div className="blue-orbit leo">
-                </div>
-
-                <div className="green-orbit leo">
-                </div>
-                
-                <div className="red-orbit leo">
-                </div>
-                
-                <div className="white-orbit w1 leo">
-                </div><div className="white-orbit w2 leo">
-                </div><div className="white-orbit w3 leo">
-                </div>
-              </div>
-        </>
-      )}
+      ) : (<Loader />)}
     </div>
   );
 }

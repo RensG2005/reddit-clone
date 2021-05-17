@@ -42,11 +42,16 @@ function Subs() {
   };
 
   useEffect(() => {
-    update();
+    let unmounted = false
+    if(!unmounted) {
+      update();
+    }
+    return (
+      unmounted = true
+    )
   }, []);
 
   const createSub = async () => {
-    console.log(name, desc, state.token[0])
     try {
       const data = await axios.post( "https://fast-atoll-84478.herokuapp.com/r/create",
         {
@@ -59,7 +64,7 @@ function Subs() {
           },
         }
       );
-      console.log(data);
+      console.log(data)
       update();
     } catch (err) {
       if (err.response) {
