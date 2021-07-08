@@ -8,8 +8,6 @@ function Home() {
 
     const state = useContext(GlobalState)
 
-    const [isLogged] = state.UserApi.isLogged;
-
         const [loader, setLoader] = useState("");
         const [posts, setPosts] = useState([]);
         const [error, setError] = useState({
