@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
+import React, { useState, useEffect, useContext, useLayoutEffect, useCallback } from "react";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
 import { useHistory } from "react-router-dom";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import Loader from "../Loader";
+import Loader from "../../components/PostSkelLoader";
 TimeAgo.addDefaultLocale(en)
 
 function PostPage({ setonPost }) {
@@ -48,7 +48,7 @@ function PostPage({ setonPost }) {
     }
   }
 
-  async function getPost() {
+  const getPost = useCallback(async () => {
     try {
       const data2 = await axios.post(
         "https://fast-atoll-84478.herokuapp.com/post/getbyid",
@@ -65,7 +65,7 @@ function PostPage({ setonPost }) {
     } catch (err) {
       console.log(err);
     }
-  }
+  }, [id, state.token])
 
   const handleKeyPress = (e) => {
     if (e.key === "Escape") {
@@ -79,13 +79,13 @@ function PostPage({ setonPost }) {
     document.getElementById("focus").focus();
 
     return setonPost(false);
-  }, []);
+  }, [getPost, setonPost]);
 
   useLayoutEffect(() => {
     return () => {
       setonPost(false);
     };
-  }, []);
+  }, [getPost, setonPost]);
 
   return (
     <div onKeyDown={handleKeyPress} tabIndex="0" id="focus">

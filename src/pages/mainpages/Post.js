@@ -68,7 +68,7 @@ function Post({ post, id }) {
   };
 
   return (
-    <div className="card mt-4 bg-dark-post width-69" key={post._id}>
+    <div className="card mx-5 mt-4 bg-dark-post width-69" key={post._id}>
       <div className="card-body d-flex p-0">
         <div className="p-3 bg-dark-post-vote text-center d-flex flex-column justify-content-center">
           <div>

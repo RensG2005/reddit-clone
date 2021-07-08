@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GlobalState } from "../../GlobalState";
+import { GlobalState } from "../../GlobalState"
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ function Subs() {
   const update = async () => {
     try {
       const data = await axios.post(
-        "https://fast-atoll-84478.herokuapp.com/r/search",
+        `${process.env.NODE_ENV === "production" ? "https://fast-atoll-84478.herokuapp.com/" : "http://localhost:5000/"}r/search`,
         {
           query: "",
           limit: 200,
@@ -53,18 +53,17 @@ function Subs() {
 
   const createSub = async () => {
     try {
-      const data = await axios.post( "https://fast-atoll-84478.herokuapp.com/r/create",
+        await axios.post( `${process.env.NODE_ENV === "production" ? "https://fast-atoll-84478.herokuapp.com/" : "http://localhost:5000/"}r/create`,
         {
           title: name,
           description: desc,
         },
         {
           headers: {
-            Authorization: state.state.token[0],
+            Authorization: state.token[0],
           },
         }
       );
-      console.log(data)
       update();
     } catch (err) {
       if (err.response) {

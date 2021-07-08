@@ -23,7 +23,7 @@ export const DataProvider = ({ children }) => {
 
           setTimeout(() => {
             refreshToken();
-          }, 10 * 60 * 1000);
+          }, 10 * 90 * 1000);
         };
         refreshToken();
       } catch (err) {

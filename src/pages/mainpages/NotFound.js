@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Loader from "../Loader";
+import Loader from "../../components/PostSkelLoader";
 
 function NotFound() {
     const [state, setstate] = useState(<Loader />)

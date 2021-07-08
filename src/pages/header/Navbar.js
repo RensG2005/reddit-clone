@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 import axios from "axios";
@@ -8,26 +8,33 @@ function Navbar() {
   const [isLogged] = state.UserApi.isLogged;
 
   const [searchData, setSearchData] = useState([]);
+  const [query, setQuery] = useState([]);
 
-  const search = async (target) => {
-    if (target) {
+
+  useEffect(() => {
+    async function search() {
       try {
         const data = await axios.post(
           `https://fast-atoll-84478.herokuapp.com/r/search`,
           {
-            query: target.value,
+            query
           }
         );
         setSearchData(data.data);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
-  };
+    let timeoutId = setTimeout(async () => {
+      if(query.length) search()
+      else setSearchData([])
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [query])
 
   return (
-    <div>
-      <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-darkdarkdark">
+      <nav className="navbar navbar-collapse navbar-expand-lg bg-darkdarkdark">
         <div className="container-fluid">
           <Link className="navbar-brand text-white" to="/">
             <svg
@@ -46,7 +53,7 @@ function Navbar() {
             Reddit
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler bg-white"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -54,7 +61,7 @@ function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon bg-white"></span>
           </button>
           <div
             className="collapse navbar-collapse justify-content-between"
@@ -67,10 +74,10 @@ function Navbar() {
                 </Link>
               </li>
               {isLogged ? (
-                <li className="nav-item ms-4">
-                  <Link className="nav-link text-white" to="/account">
-                    Account
-                  </Link>
+                <li className="nav-item ms-4" >
+                    <Link className="nav-link text-white" to="/account" >
+                      Account
+                    </Link>
                 </li>
               ) : (
                 <li className="nav-item d-flex ms-4">
@@ -92,21 +99,21 @@ function Navbar() {
                 onBlur={() =>
                   setTimeout(() => {
                     setSearchData([]);
-                  }, 900)
+                  }, 100)
                 }
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-                onChange={({ target }) => search(target)}
+                onChange={({ target }) => setQuery(target.value)}
               />
             </form>
             {searchData.length > 0 ? (
               <ul className="list-group list-group-flush search-content">
                 {searchData.map((name) => {
                   return (
-                    <li key={name._id} className="list-group-item">
+                    <li key={name._id} className="list-group-item search-content-item">
                       <a
-                        className="link"
+                        className="link-dark"
                         href={
                           window.location.pathname.split("/")[1] !== "r"
                             ? "r/" + name.title
@@ -125,7 +132,6 @@ function Navbar() {
           </div>
         </div>
       </nav>
-    </div>
   );
 }
 

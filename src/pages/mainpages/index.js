@@ -14,11 +14,11 @@ function MainPage() {
   let state = useContext(GlobalState);
   const [isLogged] = state.UserApi.isLogged;
 
-  const [onPost, setonPost] = useState(false);
+  const [,setonPost] = useState(false);
 
   return (
     <div className="bg-darkdark min-height-100">
-      <div className={onPost ? "pt-4" : "container pt-4"}>
+      <div className="pt-4 mx-10">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />

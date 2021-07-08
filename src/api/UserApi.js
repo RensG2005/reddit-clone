@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from  'axios'
 
 function UserAPI(token) {
   const [isLogged, setIsLogged] = useState(false);
@@ -22,7 +22,7 @@ function UserAPI(token) {
 
           setIsLogged(true);
         } catch (err) {
-          alert(err.response.data.msg);
+          console.log(err.response.data.msg);
         }
       };
       getUser();

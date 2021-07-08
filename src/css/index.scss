@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Noto Sans JP", Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #ff4500 !important;
+  border-color: #ff5411;
+}
+
+.btn-primary:hover {
+  background-color: #ff5400 !important;
+  border-color: #ff5411;
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+}
+
+.search-content {
+  position: fixed;
+  right: 10px;
+  top: 60px;
+  li {
+    width: 100px;
+  }
+}
+
+.width-100 {
+  min-width: 90px;
+}
+
+.min-height-100 {
+  min-height: 100vh;
+}
+
+.bg-darkdark {
+  background-color: #030303;
+  color: white;
+}
+
+.bg-darkdarkdark {
+  background-color: #191919;
+  border-bottom: #29292a 1px solid;
+}
+.link-bg {
+  background-color: #191919;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.text-black {
+  color: black !important;
+}
+
+.reddit_logo {
+  width: 50px;
+  height: 50px;
+}
+
+.bg-dark-post-vote {
+  background-color: #151516;
+}
+.bg-dark-post {
+  background-color: #1a1a1b;
+}
+
+.link-primary {
+  cursor: pointer !important;
+}
+
+.card4 {
+  min-width: 20vw;
+  max-height: 70vh;
+  margin: 0 4rem;
+}
+
+.width-69 {
+  min-width: 60vw;
+}
+
+.bg-light-card {
+  background: #272729;
+}
+
+.border-bottom-link {
+  border-bottom: solid #2a2a2b 1px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.mx-10 {
+  margin: 0 5rem;
+}
+
+div:focus {
+  outline: 0;
+}
