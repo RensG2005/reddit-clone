@@ -20,7 +20,7 @@ function MainPage() {
     <div className="bg-darkdark min-height-100">
       <div className="pt-4 mx-10">
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={isLogged ? Home : Login} />
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={signIn} />
           <Route path="/subreddits" component={Subs} />
