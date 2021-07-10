@@ -35,6 +35,7 @@ code {
   position: fixed;
   right: 10px;
   top: 60px;
+
   li {
     width: 100px;
   }
@@ -57,6 +58,7 @@ code {
   background-color: #191919;
   border-bottom: #29292a 1px solid;
 }
+
 .link-bg {
   background-color: #191919;
 }
@@ -70,13 +72,14 @@ code {
 }
 
 .reddit_logo {
-  width: 50px;
-  height: 50px;
+  width: 30px; 
+  height: 30px;
 }
 
 .bg-dark-post-vote {
   background-color: #151516;
 }
+
 .bg-dark-post {
   background-color: #1a1a1b;
 }
@@ -86,13 +89,17 @@ code {
 }
 
 .card4 {
-  min-width: 20vw;
-  max-height: 70vh;
+  min-width: 20vw; 
+  max-height: 70vh; 
   margin: 0 4rem;
 }
 
 .width-69 {
   min-width: 60vw;
+}
+
+.top {
+  padding-top: 81px;
 }
 
 .bg-light-card {
@@ -114,3 +121,127 @@ code {
 div:focus {
   outline: 0;
 }
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 60px;
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 2rem;
+    ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      li {
+        margin: 0 10px;
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .mobilenav {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  header {
+  svg {
+    height: 50px;
+  }
+  .mobilenav {
+    display: flex;
+    nav {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #030303;
+      height: 100vh;
+      width: 100vw;
+      ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        li {
+          text-align: center;
+          font-size: 2rem;
+          margin: 1rem 0;
+          a {
+            color: white;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .menu {
+    z-index: 200000999;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  .line {
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(.6);
+  }
+  .line1 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  .line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+  }
+  .line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  .opened .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+  }
+  .opened .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 6;
+  }
+  .opened .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+  }
+}
+}
+
+
+

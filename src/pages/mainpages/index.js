@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import signIn from "./signIn";
 import Subs from "./Subs";
@@ -7,18 +8,17 @@ import rSub from "./rSub";
 import User from "./User";
 import PostPage from "./PostPage";
 import NotFound from "./NotFound";
-import { Switch, Route } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 
 function MainPage() {
-  let state = useContext(GlobalState);
+  const state = useContext(GlobalState);
   const [isLogged] = state.UserApi.isLogged;
 
-  const [,setonPost] = useState(false);
+  const [, setonPost] = useState(false);
 
   return (
     <div className="bg-darkdark min-height-100">
-      <div className="pt-4 mx-10">
+      <div className="top mx-10">
         <Switch>
           <Route exact path="/" component={isLogged ? Home : Login} />
           <Route path="/login" component={Login} />

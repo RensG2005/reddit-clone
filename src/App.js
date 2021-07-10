@@ -1,17 +1,19 @@
-import Navbar from './pages/header/Navbar'
-import {DataProvider} from './GlobalState'
-import {BrowserRouter} from "react-router-dom"
-import MainPage from './pages/mainpages/index'
+import React, { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { DataProvider } from "./GlobalState";
+import Navbar from "./pages/header/Navbar";
+import MainPage from "./pages/mainpages";
 
 function App() {
-  return (
-  <DataProvider>
-    <BrowserRouter>
-          <Navbar />
-          <MainPage />
-        </BrowserRouter>
-    </DataProvider>
+  const [mobile, setMobile] = useState(false);
 
+  return (
+    <DataProvider>
+      <BrowserRouter>
+        <Navbar setMobile={setMobile} mobile={mobile} />
+        {!mobile && <MainPage />}
+      </BrowserRouter>
+    </DataProvider>
   );
 }
 

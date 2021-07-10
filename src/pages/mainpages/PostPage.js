@@ -1,38 +1,47 @@
-import React, { useState, useEffect, useContext, useLayoutEffect, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import axios from "axios";
-import { GlobalState } from "../../GlobalState";
 import { useHistory } from "react-router-dom";
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import { GlobalState } from "../../GlobalState";
 import Loader from "../../components/PostSkelLoader";
-TimeAgo.addDefaultLocale(en)
+
+TimeAgo.addLocale(en);
 
 function PostPage({ setonPost }) {
-  const timeAgo = new TimeAgo('en-US')
+  const timeAgo = new TimeAgo("en-US");
   const history = useHistory();
-  const goBack = () => {
-    history.goBack();
-  };
+  const goBack = () => history.goBack();
   const state = useContext(GlobalState);
 
   const [post, setPost] = useState({});
   const [error, setError] = useState({
     is: false,
-    msg: ""
+    msg: "",
   });
   const [Comment, setComment] = useState("");
 
-  let id = window.location.href.split("/")[
-    window.location.href.split("/").length - 1
-  ];
+  const id = window.location.href.split("/")[window.location.href.split("/").length - 1];
 
-  async function comment() {
+  console.log(post);
+
+  async function placeComment() {
     try {
       const data2 = await axios.post(
-        "https://fast-atoll-84478.herokuapp.com/post/comment",
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://fast-atoll-84478.herokuapp.com/"
+            : "http://localhost:5000/"
+        }post/comment`,
         {
-          id: id,
-          text: Comment ? Comment : "",
+          id,
+          text: Comment || "",
           creator: state.UserApi.user[0].username,
           createdAt: new Date(),
         },
@@ -42,16 +51,25 @@ function PostPage({ setonPost }) {
           },
         }
       );
-      if(!data2.data) setError({is: true, msg: "Something went wrong while making an comment."})
+      if (!data2.data) {
+        setError({
+          is: true,
+          msg: "Something went wrong while making an comment.",
+        });
+      }
     } catch (err) {
-      setError({is: true, msg: err.response.data.msg})
+      setError({ is: true, msg: err.response.data.msg });
     }
   }
 
   const getPost = useCallback(async () => {
     try {
       const data2 = await axios.post(
-        "https://fast-atoll-84478.herokuapp.com/post/getbyid",
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://fast-atoll-84478.herokuapp.com/"
+            : "http://localhost:5000/"
+        }post/getbyId`,
         {
           ids: [id],
         },
@@ -61,11 +79,11 @@ function PostPage({ setonPost }) {
           },
         }
       );
-      setPost(data2.data);
+      setPost(data2.data[0]);
     } catch (err) {
-      console.log(err);
+      return 0;
     }
-  }, [id, state.token])
+  }, [id, state.token]);
 
   const handleKeyPress = (e) => {
     if (e.key === "Escape") {
@@ -81,15 +99,16 @@ function PostPage({ setonPost }) {
     return setonPost(false);
   }, [getPost, setonPost]);
 
-  useLayoutEffect(() => {
-    return () => {
+  useLayoutEffect(
+    () => () => {
       setonPost(false);
-    };
-  }, [getPost, setonPost]);
+    },
+    [getPost, setonPost]
+  );
 
   return (
-    <div onKeyDown={handleKeyPress} tabIndex="0" id="focus">
-            {error.is ? (
+    <div onKeyDown={handleKeyPress} tabIndex="0" id="focus" role="button">
+      {error.is ? (
         <div className="alert alert-danger" role="alert">
           {error.msg}
         </div>
@@ -98,11 +117,14 @@ function PostPage({ setonPost }) {
       )}
       {Object.keys(post).length > 0 ? (
         <div className="row">
-          <div className="pointer link-bg col-sm" onClick={goBack}></div>
+          <div className="pointer link-bg col-sm" onClick={goBack} role="button" tabIndex={0} onKeyDown={goBack} aria-label="Go back with escape key" />
 
           <div className="py-4 w-75 card text-white bg-dark-post">
             <div className="d-flex justify-content-between">
-              <p>u/{post.creator}</p>
+              <p>
+                u/
+                {post.creator}
+              </p>
               <p>{timeAgo.format(new Date(post.createdAt))}</p>
             </div>
             <h2 className="pt-2 pb-1 border-post">{post.title}</h2>
@@ -116,43 +138,46 @@ function PostPage({ setonPost }) {
                 placeholder="What are your thoughts?"
                 type="text"
                 onChange={({ target }) => setComment(target.value)}
-               ></textarea>
+              />
               <div className="input-group-prepend">
                 <button
                   className="input-group-text"
                   id="inputGroup-sizing-default"
                   type="button"
-                  onClick={() => comment()}
+                  onClick={() => placeComment()}
                 >
-                  Comment as {post.creator}
+                  Comment as
+                  {' '}
+                  {post.creator}
                 </button>
               </div>
             </div>
             {post.comments.length > 0 ? (
-              post.comments.map((post) => {
-                return (
-                  <div
-                    key={post.createdAt}
-                    className="my-1 border border-white p-3"
-                  >
-                    <div className="d-flex justify-content-between">
-                      <p>
-                        {timeAgo.format(new Date(post.createdAt))}
-                      </p>
-                      <p>u/{post.creator}</p>
-                    </div>
-                    <p>{post.text}</p>
+              post.comments.map((comment) => (
+                <div
+                  key={comment.createdAt}
+                  className="my-1 border border-white p-3"
+                >
+                  <div className="d-flex justify-content-between">
+                    <p>{timeAgo.format(new Date(comment.createdAt))}</p>
+                    <p>
+                      u/
+                      {comment.creator}
+                    </p>
                   </div>
-                );
-              })
+                  <p>{comment.text}</p>
+                </div>
+              ))
             ) : (
               <div>No comments yet!</div>
             )}
           </div>
 
-          <div className="pointer link-bg col-sm" onClick={goBack}></div>
+          <div className="pointer link-bg col-sm" onClick={goBack} onKeyDown={goBack} role="button" aria-label="go back 1 page" tabIndex={0} />
         </div>
-      ) : (<Loader />)}
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { GlobalState } from "../../GlobalState";
 import axios from "axios";
-import TimeAgo from 'javascript-time-ago'
+import TimeAgo from "javascript-time-ago";
+import { GlobalState } from "../../GlobalState";
 
-function Post({ post, id }) {
-  const timeAgo = new TimeAgo('en-US')
+function Post({ post }) {
+  const timeAgo = new TimeAgo("en-US");
   const state = useContext(GlobalState);
   const [vote, setvote] = useState(false);
   const [dvote, setdvote] = useState(false);
-  let [fakecount, setfakecount] = useState(0);
+  const [fakecount, setfakecount] = useState(0);
 
   const upvote = async () => {
     if (dvote) {
@@ -25,7 +25,11 @@ function Post({ post, id }) {
     }
     try {
       await axios.post(
-        "https://fast-atoll-84478.herokuapp.com/post/vote",
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://fast-atoll-84478.herokuapp.com/"
+            : "http://localhost:5000/"
+        }post/vote`,
         {
           way: "up",
           id: post._id,
@@ -36,7 +40,9 @@ function Post({ post, id }) {
           },
         }
       );
-    } catch (err) {}
+    } catch (err) {
+      return 0;
+    }
   };
 
   const downvote = async () => {
@@ -64,7 +70,9 @@ function Post({ post, id }) {
           },
         }
       );
-    } catch (err) {}
+    } catch (err) {
+      return 0;
+    }
   };
 
   return (
@@ -126,7 +134,7 @@ function Post({ post, id }) {
           </div>
         </div>
         <Link
-          to={"/post/" + post._id}
+          to={`/post/${post._id}`}
           className="text-white text-decoration-none py-3 mx-4 w-100"
         >
           <div className="pointer">
@@ -138,8 +146,8 @@ function Post({ post, id }) {
                     window.location.href.split("/").length - 1
                   ]
                 }
-                &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;Posted by: u/
-                {post.creator}{" "}
+                &nbsp&nbsp&nbsp•&nbsp&nbsp&nbspPosted by: u/
+                {post.creator}
               </p>
               <p className="fw-lighter">
                 {timeAgo.format(new Date(post.createdAt))}
@@ -151,7 +159,10 @@ function Post({ post, id }) {
               {post.text.substring(0, 399)}
               {post.text.length > 399 ? "..." : ""}
             </p>
-            <p className="link-primary">{post.comments.length} Comments</p>
+            <p className="link-primary">
+              {post.comments.length}
+              Comments
+            </p>
           </div>
         </Link>
       </div>

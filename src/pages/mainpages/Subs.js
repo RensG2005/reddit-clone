@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GlobalState } from "../../GlobalState"
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { GlobalState } from "../../GlobalState";
 
 function Subs() {
   const [Data, setData] = useState({});
@@ -12,13 +12,17 @@ function Subs() {
     msg: "",
   });
 
-  let state = useContext(GlobalState);
+  const state = useContext(GlobalState);
   const [isLogged] = state.UserApi.isLogged;
 
   const update = async () => {
     try {
       const data = await axios.post(
-        `${process.env.NODE_ENV === "production" ? "https://fast-atoll-84478.herokuapp.com/" : "http://localhost:5000/"}r/search`,
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://fast-atoll-84478.herokuapp.com/"
+            : "http://localhost:5000/"
+        }r/search`,
         {
           query: "",
           limit: 200,
@@ -31,8 +35,7 @@ function Subs() {
       } else {
         setError({
           is: true,
-          msg:
-            "Something went wrong while fetching the data. Please try again.",
+          msg: "Something went wrong while fetching the data. Please try again.",
         });
       }
       setTimeout(() => {
@@ -42,18 +45,22 @@ function Subs() {
   };
 
   useEffect(() => {
-    let unmounted = false
-    if(!unmounted) {
+    let unmounted = false;
+    if (!unmounted) {
       update();
     }
-    return (
-      unmounted = true
-    )
+    // eslint-disable-next-line no-return-assign
+    return (unmounted = true);
   }, []);
 
   const createSub = async () => {
     try {
-        await axios.post( `${process.env.NODE_ENV === "production" ? "https://fast-atoll-84478.herokuapp.com/" : "http://localhost:5000/"}r/create`,
+      await axios.post(
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://fast-atoll-84478.herokuapp.com/"
+            : "http://localhost:5000/"
+        }r/create`,
         {
           title: name,
           description: desc,
@@ -71,8 +78,7 @@ function Subs() {
       } else {
         setError({
           is: true,
-          msg:
-            "Something went wrong when creating a new sub. Please try again.",
+          msg: "Something went wrong when creating a new sub. Please try again.",
         });
       }
       setTimeout(() => {
@@ -103,18 +109,17 @@ function Subs() {
       <div className="card bg-light-card p-2 ps-4">All Comunities</div>
       {Object.keys(Data).length !== 0 ? (
         <div className="d-flex flex-column list-group list-group-flush">
-          {Data.map((piece) => {
-            return (
-              <Link
-                key={piece._id}
-                className="list-group-item bg-dark-post text-white border-bottom-link fs-4"
-                id={piece.id}
-                to={isLogged ? "/r/" + piece.title : "/login"}
-              >
-                r/{piece.title}
-              </Link>
-            );
-          })}
+          {Data.map((piece) => (
+            <Link
+              key={piece._id}
+              className="list-group-item bg-dark-post text-white border-bottom-link fs-4"
+              id={piece.id}
+              to={isLogged ? `/r/${piece.title}` : "/login"}
+            >
+              r/
+              {piece.title}
+            </Link>
+          ))}
         </div>
       ) : (
         <div>No subs yet. Create one!</div>
@@ -138,7 +143,7 @@ function Subs() {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body">
               <form>
@@ -148,17 +153,18 @@ function Subs() {
                     className="form-label text-black"
                   >
                     Subreddit Name
+                    <input
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      type="text"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                    />
                   </label>
-                  <input
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
+
                   <div id="emailHelp" className="form-text">
                     This is the name your subreddit wil get and will get found
                     by.
@@ -170,16 +176,16 @@ function Subs() {
                     className="form-label text-black"
                   >
                     description
+                    <textarea
+                      value={desc}
+                      onChange={(e) => {
+                        setDesc(e.target.value);
+                      }}
+                      type="text"
+                      className="form-control"
+                      id="exampleInputPassword1"
+                    />
                   </label>
-                  <textarea
-                    value={desc}
-                    onChange={(e) => {
-                      setDesc(e.target.value);
-                    }}
-                    type="text"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                  ></textarea>
                   <div id="emailHelp" className="form-text">
                     Max 400 characters.
                   </div>

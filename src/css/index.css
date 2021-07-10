@@ -70,8 +70,8 @@ code {
 }
 
 .reddit_logo {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
 }
 
 .bg-dark-post-vote {
@@ -96,6 +96,10 @@ code {
   min-width: 60vw;
 }
 
+.top {
+  padding-top: 81px;
+}
+
 .bg-light-card {
   background: #272729;
 }
@@ -114,5 +118,161 @@ code {
 
 div:focus {
   outline: 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100vw;
+  height: 60px;
+}
+
+header .desktop-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-right: 2rem;
+}
+
+header .desktop-nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  list-style: none;
+  margin: 0;
+}
+
+header .desktop-nav ul li {
+  margin: 0 10px;
+}
+
+header .desktop-nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+header .mobilenav {
+  display: none;
+}
+
+@media screen and (max-width: 880px) {
+  header svg {
+    height: 50px;
+  }
+  header .mobilenav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  header .mobilenav nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #030303;
+    height: 100vh;
+    width: 100vw;
+  }
+  header .mobilenav nav ul {
+    list-style: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  header .mobilenav nav ul li {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+  header .mobilenav nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  header .desktop-nav {
+    display: none;
+  }
+  header .menu {
+    z-index: 200000999;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: none;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  header .line {
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    -webkit-transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transform: scale(0.6);
+            transform: scale(0.6);
+  }
+  header .line1 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  header .line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+  }
+  header .line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  header .opened .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+  }
+  header .opened .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 6;
+  }
+  header .opened .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+  }
 }
 /*# sourceMappingURL=index.css.map */

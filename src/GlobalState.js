@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
 import UserApi from "./api/UserApi";
-import axios from "axios";
 
 export const GlobalState = createContext();
 
@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
         const refreshToken = async () => {
           const res = await axios.post(
             "https://fast-atoll-84478.herokuapp.com/user/refresh_token",
-            { refreshtoken: refreshtoken }
+            { refreshtoken }
           );
 
           setToken(res.data.accesstoken);
@@ -27,7 +27,7 @@ export const DataProvider = ({ children }) => {
         };
         refreshToken();
       } catch (err) {
-        console.log(err);
+        return 0;
       }
     }
   }, []);
