@@ -50,6 +50,7 @@ function RSub() {
         }
       );
     } catch (err) {
+      console.log(err);
       if (err.response) {
         setError({ is: true, msg: err.response.data.msg });
       } else {
@@ -63,8 +64,8 @@ function RSub() {
       }, 3000);
     }
   }
-  const update = useCallback(async () => {
-    if (ls.get("posts") !== null && ls.get("sub") !== null) {
+  const update = useCallback(async (dontuseLS = false) => {
+    if (ls.get("posts") !== null && ls.get("sub") !== null && !dontuseLS) {
       setPosts(ls.get("posts"));
       setData(ls.get("sub"));
     } else {
@@ -91,8 +92,6 @@ function RSub() {
           }
         );
         setData(postsIDs.data[0]);
-
-        console.log(postsIDs);
 
         if (postsIDs?.data[0]?.posts.length > 0) {
           const allPosts = postsIDs.data[0].posts;
@@ -185,7 +184,7 @@ function RSub() {
         }
       );
 
-      update();
+      update(true);
     } catch (err) {
       console.log(err);
       if (err) {
@@ -213,7 +212,7 @@ function RSub() {
       <div className="d-flex w-100 justify-content-between">
         <div>
           {posts.length > 0
-            ? posts.map((post) => <Post post={post} key={post._id} />)
+            ? posts.map((post) => (post ? <Post post={post} key={post._id} /> : ""))
             : loader}
         </div>
 

@@ -26,7 +26,7 @@ function Subs() {
         {
           query: "",
           limit: 200,
-        }
+        },
       );
       setData(data.data);
     } catch (err) {

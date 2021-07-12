@@ -19,6 +19,11 @@ code {
   border-color: #ff5411;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .btn-primary:hover {
   background-color: #ff5400 !important;
   border-color: #ff5411;
@@ -55,6 +60,14 @@ code {
 .bg-darkdarkdark {
   background-color: #191919;
   border-bottom: #29292a 1px solid;
+}
+
+.profile-picture {
+  height: 50px !important;
+}
+
+.profile-picture-small {
+  height: 25px !important;
 }
 
 .link-bg {

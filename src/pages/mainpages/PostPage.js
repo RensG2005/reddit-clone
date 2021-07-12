@@ -29,8 +29,6 @@ function PostPage({ setonPost }) {
 
   const id = window.location.href.split("/")[window.location.href.split("/").length - 1];
 
-  console.log(post);
-
   async function placeComment() {
     try {
       const data2 = await axios.post(

@@ -15,7 +15,11 @@ export const DataProvider = ({ children }) => {
       try {
         const refreshToken = async () => {
           const res = await axios.post(
-            "https://fast-atoll-84478.herokuapp.com/user/refresh_token",
+            `${
+              process.env.NODE_ENV === "production"
+                ? "https://fast-atoll-84478.herokuapp.com/"
+                : "http://localhost:5000/"
+            }user/refresh_token`,
             { refreshtoken }
           );
 

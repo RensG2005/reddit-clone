@@ -120,7 +120,7 @@ function Home() {
       )}
       <div>
         {posts.length > 0
-          ? posts.map((post) => <Post post={post} key={post._id} />)
+          ? posts.map((post) => (post ? <Post post={post} key={post._id} /> : ""))
           : loader}
       </div>
     </div>

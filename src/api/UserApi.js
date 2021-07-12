@@ -11,7 +11,11 @@ function UserAPI(token) {
       const getUser = async () => {
         try {
           const res = await axios.get(
-            "https://fast-atoll-84478.herokuapp.com/user/information",
+            `${
+              process.env.NODE_ENV === "production"
+                ? "https://fast-atoll-84478.herokuapp.com/"
+                : "http://localhost:5000/"
+            }user/information`,
             {
               headers: { Authorization: token },
             }

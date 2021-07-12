@@ -57,7 +57,15 @@ function Navbar({ setMobile, mobile }) {
       <nav className="desktop-nav">
         <ul>
           <li className="text-white"><Link to="/subreddits">Subreddits</Link></li>
-          {isLogged ? <li className="text-white"><Link to="/account">{state.UserApi.user[0].username}</Link></li> : <li className="text-white"><Link to="/login">Login</Link></li>}
+          {isLogged ? (
+            <li className="text-white">
+              <Link to="/account">
+                u/
+                {state.UserApi.user[0].username}
+              </Link>
+              <img alt="profile" src={state.UserApi.user[0].profilePicture} className="profile-picture-small rounded-circle ms-2" />
+            </li>
+          ) : <li className="text-white"><Link to="/login">Login</Link></li>}
           {!isLogged && <li className="text-white btn btn-primary"><Link to="/sign-up">Register</Link></li>}
         </ul>
       </nav>
@@ -73,7 +81,15 @@ function Navbar({ setMobile, mobile }) {
         {mobile ? (
           <nav>
             <ul>
-              {isLogged ? <li className="text-white"><Link to="/account">Account</Link></li> : <li className="text-white"><Link to="/login">Login</Link></li>}
+              {isLogged ? (
+                <li className="text-white">
+                  <img alt="profile" src={state.UserApi.user[0].profilePicture} className="profile-picture-small rounded-circle ms-2" />
+                  <Link to="/account">
+                    u/
+                    {state.UserApi.user[0].username}
+                  </Link>
+                </li>
+              ) : <li className="text-white"><Link to="/login">Login</Link></li>}
               {!isLogged && <li className="text-white"><Link to="/sign-up">Register</Link></li>}
               <li className="text-white"><Link to="/subreddits">Subreddits</Link></li>
             </ul>
