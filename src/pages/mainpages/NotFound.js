@@ -12,7 +12,7 @@ function NotFound() {
           <img src="https://www.redditstatic.com/reddit404c.png" alt="404 page" />
         </div>
       );
-    }, 5000);
+    }, 1500);
 
     return () => {
       setstate("");

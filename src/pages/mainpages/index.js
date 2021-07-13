@@ -9,6 +9,7 @@ import User from "./User";
 import PostPage from "./PostPage";
 import NotFound from "./NotFound";
 import { GlobalState } from "../../GlobalState";
+import UserProfile from "./UserProfile";
 
 function MainPage() {
   const state = useContext(GlobalState);
@@ -25,6 +26,7 @@ function MainPage() {
           <Route path="/sign-up" component={signIn} />
           <Route path="/subreddits" component={Subs} />
           <Route path="/r/:sub" component={isLogged ? rSub : NotFound} />
+          <Route path="/u/:user" component={isLogged ? UserProfile : NotFound} />
           <Route path="/account" component={isLogged ? User : NotFound} />
           <Route
             path="/post/:id"

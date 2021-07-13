@@ -51,7 +51,9 @@ function Navbar({ setMobile, mobile }) {
             />
           </g>
         </svg>
-        Reddit
+        <h3 className="p-0 m-0 text-decoration-none text-white d-flex align-items-center">
+          Reddit
+        </h3>
       </Link>
 
       <nav className="desktop-nav">

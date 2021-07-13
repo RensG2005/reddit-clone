@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import login from "../../api/login";
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -11,48 +12,9 @@ function Login() {
     msg: "",
   });
 
-  const login = async (e) => {
-    setLoading(true);
-    try {
-      e.preventDefault();
-      const data = await axios.post(
-        `${
-          process.env.NODE_ENV === "production"
-            ? "https://fast-atoll-84478.herokuapp.com/"
-            : "http://localhost:5000/"
-        }user/login`,
-        {
-          email,
-          password,
-        }
-      );
-
-      setEmail("");
-      setPassword("");
-
-      localStorage.setItem("firstLogin", true);
-      localStorage.setItem("refreshtoken", data.data.refreshtoken);
-
-      window.location.href = "/account";
-    } catch (err) {
-      if (err.response) {
-        setError({ is: true, msg: err.response.data.msg });
-      } else {
-        setError({
-          is: true,
-          msg: "Something went wrong when logging in. Please try again.",
-        });
-      }
-      setTimeout(() => {
-        setError({});
-      }, 3000);
-    }
-    setLoading(false);
-  };
-
   return (
     <>
-      <form onSubmit={login}>
+      <form onSubmit={(e) => login(e, setLoading, setEmail, setPassword, setError, email, password)}>
         {error.is ? (
           <div className="alert alert-danger" role="alert">
             {error.msg}
@@ -109,7 +71,7 @@ function Login() {
 
       <p>
         Don&apos;t have an account?
-        <Link to="/sign-up">Sign-up</Link>
+        <Link to="/sign-up" className="link-primary"> Sign-up</Link>
       </p>
     </>
   );

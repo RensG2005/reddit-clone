@@ -152,7 +152,7 @@ function SignIn() {
 
       <p className="mt-3">
         Already have an account?
-        <Link to="/login">Login</Link>
+        <Link to="/login" className="link-primary"> Login</Link>
       </p>
     </>
   );

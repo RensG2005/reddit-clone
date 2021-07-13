@@ -141,39 +141,45 @@ function Post({ post }) {
             <h4 className="mt-2">{post.upvotes + fakecount}</h4>
           </div>
         </div>
-        <Link
-          to={`/post/${post._id}`}
-          className="text-white text-decoration-none py-3 mx-4 w-100"
-        >
-          <div className="pointer">
-            <div className="d-flex justify-content-between">
-              <p className="card-text">
-                r/
-                {
-                  window.location.href.split("/")[
-                    window.location.href.split("/").length - 1
-                  ]
-                }
-                {"     "}
-                Posted by: u/
-                {post.creator}
-              </p>
-              <p className="fw-lighter">
-                {timeAgo.format(new Date(post.createdAt))}
-              </p>
-            </div>
 
-            <h2 className="card-title">{post.title}</h2>
-            <p className="card-text">
-              {post.text.substring(0, 399)}
-              {post.text.length > 399 ? "..." : ""}
+        <div className="w-100">
+          <div className="d-flex justify-content-between w-100 p-0">
+            <p className="card-text mx-4 mt-4 mb-0">
+              <Link to={`r/${post.sub}`} className="link-primary">
+                r/
+                {`${post.sub}`}
+              </Link>
+              <span className="d-inline ms-3">
+                Posted by:
+              </span>
+              <Link to={`u/${post.creator}`}>
+                <img className="profile-picture-small rounded-circle ms-2 me-1" src={state.UserApi.user[0].profilePicture} alt="profile" />
+                u/
+                {post.creator}
+              </Link>
             </p>
-            <p className="link-primary">
-              {post.comments.length}
-              Comments
+            <p className="fw-lighter mx-4 mt-4">
+              {timeAgo.format(new Date(post.createdAt))}
             </p>
           </div>
-        </Link>
+
+          <div className="pointer w-100 mx-4">
+            <Link
+              to={`/post/${post._id}`}
+              className="text-white text-decoration-none w-100"
+            >
+              <h2 className="card-title">{post.title}</h2>
+              <p className="card-text me-10">
+                {post.text.substring(0, 399)}
+                {post.text.length > 399 ? "..." : ""}
+              </p>
+              <p className="link-primary mb-4">
+                {`${post.comments.length} `}
+                Comments
+              </p>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
